@@ -68,11 +68,9 @@ body {
 					</a>
 				</div>
 
-				<div
-					class="row navbar-collapse col-lg d-flex justify-content-end p-0 m-0 d-flex justify-content-center"
+				<div class="row navbar-collapse col-lg d-flex justify-content-end p-0 m-0 d-flex justify-content-center"
 					id="mainNavBar">
-					<ul
-						class="row navbar-nav d-flex justify-content-end col-lg p-0 m-0">
+					<ul class="row navbar-nav d-flex justify-content-end col-lg p-0 m-0" >
 						<li sec:authorize="hasAuthority('ADMIN')"
 							class="col-lg-2 nav-item dropdown mx-3 d-flex justify-content-center"><a
 							class=" nav-link dropdown-toggle" href="#" data-toggle="dropdown"
@@ -82,26 +80,24 @@ body {
 							<ul class="dropdown-menu">
 								<li><a class="text-black dropdown-item"
 									href="/userhandling">Felhasználók kezelése</a></li>
-								<li><a class="text-black dropdown-item" href="#">Rendszer
-										beállítások</a></li>
+								<li><a class="text-black dropdown-item"
+									href="#">Rendszer beállítások</a></li>
 							</ul></li>
 						<li sec:authorize="hasAuthority('USER')"
 							class="col-lg-2 nav-item dropdown mx-3 d-flex  justify-content-center">
-							<a class="nav-link  dropdown-toggle" href="#"
-							data-toggle="dropdown" role="button" aria-haspopup="true"
-							aria-expanded="true"> <span class="nav-label"
-								style="color: white">Személyes menü</span>
-						</a>
+							<a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown"
+							role="button" aria-haspopup="true" aria-expanded="true"> 
+								<span class="nav-label" style="color: white">Személyes menü</span>
+							</a>
 
 							<ul class="dropdown-menu">
-								<li><a class="text-black dropdown-item" href="/calendar">Szabadságok
-										kezelése</a></li>
+								<li><a class="text-black dropdown-item"
+									href="/calendar">Szabadságok kezelése</a></li>
 								<li sec:authorize="hasAuthority('APPROVER')"><a
 									class="text-black dropdown-item" href="/approvingPage">Jóváhagyások</a></li>
-								<li><a class="text-black dropdown-item"
-									href="/changepassword">Jelszó csere</a></li>
-							</ul>
-						</li>
+								<li><a
+									class="text-black dropdown-item" href="/changepassword">Jelszó csere</a></li>
+							</ul></li>
 						<li sec:authorize="hasAuthority( 'HR')"
 							class="col-lg-2 nav-item dropdown mx-3 d-flex justify-content-center"><a
 							class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown"
@@ -123,21 +119,21 @@ body {
 								th:action="@{/logout}" method="post">
 								<a href="javascript:{}"
 									onclick="document.getElementById('frmlogout').submit(); return false;"
-									class="btn btn-outline-light ms-2"><b>Kijelentkezés</b></a>
+									class="btn btn-outline-light ms-2"><b >Kijelentkezés</b></a>
 							</form>
 						</li>
 					</ul>
 				</div>
-
-
-
-
+				
+				
+				
+				
 			</div>
 		</nav>
 	</div>
 
 
-	<div layout:fragment="loginContent"></div>
+	<div layout:fragment="loginContent" ></div>
 
 
 

@@ -113,7 +113,7 @@ public class EventsDatesService {
 	public void init() throws ParseException {
 
 		int thisYear = Year.now().getValue();
-		for (var i = 0; i < 5; i++)
+		for (int i = 0; i < 5; i++)
 			setConstantExEvents(thisYear + i); // állandó ünnepek DB-be
 
 	}
