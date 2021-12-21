@@ -1,0 +1,8 @@
+holiday\controller\UserController.class
+holiday\entity\Event.class
+holiday\entity\UserLeaves.class
+holiday\services\UserDetailsImpl.class
+holiday\entity\User.class
+holiday\entity\Role.class
+holiday\services\LeaveService.class
+holiday\repository\UserRepository.class
