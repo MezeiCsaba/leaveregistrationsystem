@@ -227,7 +227,7 @@ function addEventsToCalendar() {
 					thisCell.setAttribute('title', titleText + ' (DE)')
 					break;
 				case 3:
-					thisCell.style.backgroundColor = "lightgreen"
+					thisCell.style.backgroundColor = "yellow"
 					thisCell.style.color = "black"
 					thisCell.setAttribute('title', titleText + ' (DU)')
 					break;
@@ -326,12 +326,12 @@ function setDateAttr(id) {
 			break;
 		case 'gold': // délután (fél nap szabi)
 			thisCell.style.border = "1px solid black"
-			thisCell.style.backgroundColor = "lightgreen"
+			thisCell.style.backgroundColor = "yellow"
 			thisCell.style.color = "black"
 			thisCell.setAttribute('title', 'du')
 			eventList[pos].duration = 3
 			break;
-		case 'lightgreen': // nem szabi
+		case 'yellow': // nem szabi
 			thisCell.style.border = "1px solid black"
 			thisCell.style.backgroundColor = "white"
 			thisCell.style.color = "black"

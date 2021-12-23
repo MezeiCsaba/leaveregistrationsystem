@@ -23,9 +23,9 @@ public class UserLeaves {
 	private Integer parentalLeave;
 	private Integer carriedLeave;
 	private Integer otherLeave;
-	
 
-	public UserLeaves(User user, Integer actYear, Integer baseLeave, Integer parentalLeave, Integer carriedLeave, Integer otherLeave) {
+	public UserLeaves(User user, Integer actYear, Integer baseLeave, Integer parentalLeave, Integer carriedLeave,
+			Integer otherLeave) {
 		this.user = user;
 		this.year = actYear;
 		this.baseLeave = baseLeave;
@@ -35,9 +35,8 @@ public class UserLeaves {
 	}
 
 	public UserLeaves() {
-			
+
 	}
-	
 
 	public Long getId() {
 		return id;
@@ -94,17 +93,17 @@ public class UserLeaves {
 	public void setYear(Integer year) {
 		this.year = year;
 	}
-	
+
 	public Integer getSumLeaveFrame() {
-		return baseLeave + parentalLeave + carriedLeave + otherLeave;
+		return (baseLeave == null && parentalLeave == null && carriedLeave == null && otherLeave == null) ? 0
+				: (baseLeave + parentalLeave + carriedLeave + otherLeave);
 	}
-	
-	
+
 	@Override
 	public String toString() {
-		return "UserLeaves [id=" + id + ", user=" + ((user!=null)? user.getName():"null") + ", year=" + year + ", baseLeave=" + baseLeave
-				+ ", parentalLeave=" + parentalLeave + ", carriedLeave=" + carriedLeave + ", otherLeave=" + otherLeave
-				+ "]";
+		return "UserLeaves [id=" + id + ", user=" + ((user != null) ? user.getName() : "null") + ", year=" + year
+				+ ", baseLeave=" + baseLeave + ", parentalLeave=" + parentalLeave + ", carriedLeave=" + carriedLeave
+				+ ", otherLeave=" + otherLeave + "]";
 	}
 
 }

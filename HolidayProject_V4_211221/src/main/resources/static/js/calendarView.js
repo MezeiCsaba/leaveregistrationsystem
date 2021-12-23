@@ -20,6 +20,16 @@ const year = new Date().getFullYear()
 
 var exEventList;
 var eventList;
+var numberOfEventPerMonth;
+
+
+var leavecounterOfMonth=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+
+
+for (let i in eventList) {
+	var  date = new Date(eventList[i].startDate)
+	if (date.getFullYear() == year) leavecounterOfMonth[date.getMonth()]+=eventList[i].duration > 1 ? .5 : 1 ;
+}
 
 
 for (let i = 0; i < tables.length; i++) {
@@ -55,7 +65,7 @@ function generateTableHead(table, month) {
     row.style.color= (month==thisMonth)? "brown":"black"
     let th = document.createElement("th")
     th.colSpan = "7"
-    let dateText = ((month==0)? year + ". " : '') + MONTHS[month];
+    let dateText = ((month==0)? year + ". " : '') + MONTHS[month] + " (" + leavecounterOfMonth[month] +")";
 	text= document.createTextNode(dateText)
     th.appendChild(text)
     row.appendChild(th)
@@ -173,12 +183,12 @@ function addEventsToCalendar() {
 				thisCell.setAttribute('title', titleText)
 				break;
 				case 2:
-				 thisCell.style.backgroundColor = "yellow"
+				 thisCell.style.backgroundColor = "gold"
 	            thisCell.style.color = "black"
 	            thisCell.setAttribute('title', titleText+' (DE)')
 				break;
 				case 3:
-				thisCell.style.backgroundColor = "lightgreen"
+				thisCell.style.backgroundColor = "yellow"
 	            thisCell.style.color = "black"
 	            thisCell.setAttribute('title', titleText+' (DU)')
 				break;

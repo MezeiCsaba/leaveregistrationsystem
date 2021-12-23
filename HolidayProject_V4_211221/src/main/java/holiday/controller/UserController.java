@@ -1,7 +1,6 @@
 package holiday.controller;
 
 import java.time.Year;
-import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -19,14 +18,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import holiday.entity.Event;
-import holiday.entity.EventDates;
 import holiday.entity.Role;
 import holiday.entity.User;
 import holiday.entity.UserLeaves;
 import holiday.repository.UserRepository;
-import holiday.services.EventService;
-import holiday.services.EventsDatesService;
 import holiday.services.LeaveService;
 import holiday.services.RoleService;
 import holiday.services.UserService;
@@ -40,15 +35,8 @@ public class UserController {
 
 	private UserRepository userRepo;
 	private LeaveService leaveService;
-	private EventService eventService;
 	private UserService userService;
 	private RoleService roleService;
-	private EventsDatesService eventsDatesService;
-
-	@Autowired
-	public void setEventsDatesService(EventsDatesService eventsDatesService) {
-		this.eventsDatesService = eventsDatesService;
-	}
 
 	@Autowired
 	public void setRoleService(RoleService roleService) {
@@ -58,11 +46,6 @@ public class UserController {
 	@Autowired
 	public void setLeaveService(LeaveService leaveService) {
 		this.leaveService = leaveService;
-	}
-
-	@Autowired
-	public void setEventService(EventService eventService) {
-		this.eventService = eventService;
 	}
 
 	@Autowired
@@ -90,7 +73,7 @@ public class UserController {
 		model.addAttribute("approversList", approvers);
 
 		Integer thisYear = Year.now().getValue();
-		
+
 		if (user.getId() != null) { // update User
 			actUser = userService.findById(user.getId());
 			actYearLeavesFrame = leaveService.getUserLeavesByYear(thisYear, user);
@@ -105,18 +88,17 @@ public class UserController {
 		}
 		actYearLeavesFrame.setUser(null);
 		nextYearLeavesFrame.setUser(null);
-		
+
 		model.addAttribute("user", actUser);
 		model.addAttribute("actYearLeavesFrame", actYearLeavesFrame);
 		model.addAttribute("nextYearLeavesFrame", nextYearLeavesFrame);
-		
 
 		return "registration";
 	}
 
 	@PostMapping("/reg")
 	public String reg(@ModelAttribute User user, Authentication authentication) {
-		
+
 		newUserError = null;
 		Integer thisYear = Year.now().getValue();
 		User authUser = userService.findByEmail(authentication.getName());
@@ -132,12 +114,11 @@ public class UserController {
 				userService.registerUser(user);
 				leaveService.saveLeave(new UserLeaves(user, thisYear, 20, 0, 0, 0));
 				newUserError = "regSucces";
-				log.debug("új regisztráció:" + user.getEmail() +" ("+ authUser.getEmail()+")");
+				log.debug("új regisztráció:" + user.getEmail() + " (" + authUser.getEmail() + ")");
 			}
 
 		} else { // update user
 
-			
 			Boolean chgEmail = false;
 
 			if (user.getName() == null || user.getName().isEmpty())
@@ -162,7 +143,7 @@ public class UserController {
 			if (roleService.userRoleisExist(authUser.getId(), "ADMIN")) {
 				userService.updateUserAsAdmin(user, chgEmail);
 			}
-			
+
 			newUserError = "updateSucces"; // sikeres adat frissítés
 		}
 
@@ -231,37 +212,7 @@ public class UserController {
 	public String userInfoPage(@RequestParam("user.id") Long userId, Model model) {
 
 		User actUser = userService.findById(userId);
-		Long actUserId = userId;
-		
-		// ez a kód ugyanaz, mint a MainController Index metódusa, később refakt!
-		Integer thisYear = Year.now().getValue();
-		UserLeaves userLeaves = leaveService.getUserLeavesByYear(thisYear, actUser);
-		if (userLeaves == null)
-			userLeaves = new UserLeaves();
-
-		Double userSumLeaves[] = new Double[2]; // kivett és összes szabadság napokban
-		Arrays.fill(userSumLeaves, 0D);
-
-		userSumLeaves[0] = eventService.getUserSumLeave(actUserId, thisYear);
-		userSumLeaves[1] = Double.valueOf( userLeaves.getSumLeaveFrame());
-
-		String approverName = " nincs";
-		if (actUser.getApproverId() != null) {
-			User approver = userService.findById(actUser.getApproverId());
-			approverName = approver.getName() + " (" + approver.getEmail() + ")"; // jóváhagyó személye és emil címe
-		}
-		List<Event> eventList = eventService.getUserEvents(actUserId); // szabadságok
-		eventList.forEach(e -> e.setUser(null)); // user objektumot kukázzuk, mert a Javascriptnek átadásnál gond van
-													// vele és nem is kell
-		List<EventDates> exEventList = eventsDatesService.getAllEvents(thisYear); // kivételnapok
-
-		model.addAttribute("approverName", approverName);
-		model.addAttribute("user", actUser);
-		model.addAttribute("userSumLeaves", userSumLeaves);
-		model.addAttribute("userLeaves", userLeaves);
-		model.addAttribute("eventList", eventList);
-		model.addAttribute("exEventList", exEventList);
-
+		userService.setPageAttributums(actUser, model);
 		return "userInfoPage";
 	}
 

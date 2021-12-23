@@ -2,7 +2,7 @@ package holiday.services;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -14,27 +14,30 @@ public class EmailService implements Runnable {
 
 	private final Log log = LogFactory.getLog(this.getClass());
 
-	@Value("${spring.mail.username}")
+//	@Value("${spring.mail.username}")
 	private String MESSAGE_FROM;
-	
+
 	private User user;
 	private String subject;
 	private String messageText;
 
 	private JavaMailSender javaMailSender;
 
-	
-	
-	public EmailService() {}
+	@Autowired
+	public void setJavaMailSender(JavaMailSender javaMailSender) {
+		this.javaMailSender = javaMailSender;
+	}
+
+	public EmailService() {
+	}
 
 	public EmailService(User user, String subject, String messageText, JavaMailSender javaMailSender) {
 		this.user = user;
 		this.subject = subject;
 		this.messageText = messageText;
-		this.javaMailSender=javaMailSender;
+		this.javaMailSender = javaMailSender;
+
 	}
-
-
 
 	@Override
 	public void run() {
@@ -52,16 +55,15 @@ public class EmailService implements Runnable {
 			message.setText("Kedves " + name + "! \n\n" + messageText);
 
 			javaMailSender.send(message);
+
+			javaMailSender.toString();
+
 			log.debug("E-mai sikeresen elküldve a(z)" + emailAddres + " címre!");
 
 		} catch (Exception e) {
 			log.debug("Hiba az e-mail küldésekor, a(z)" + emailAddres + " címre! (" + e + ")");
 		}
-		
-		
 
 	}
-
-	
 
 }
