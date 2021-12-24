@@ -23,7 +23,7 @@ var eventList;
 var numberOfEventPerMonth;
 
 
-var leavecounterOfMonth=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+var leavecounterOfMonth=Array(12).fill(0);
 
 
 for (let i in eventList) {
