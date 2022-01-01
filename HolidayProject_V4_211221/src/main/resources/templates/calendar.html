@@ -85,7 +85,7 @@
 								<input th:value="${leave.year}" onclick="clearTable()"
 									type="radio" class="btn-check" name="btnradio"
 									th:id="'btnradio' + ${leave.year}" autocomplete="off"
-									th:checked="(${idx.index} == 0)? 'true':'false'"> <label
+									th:checked="(${#dates.year(#dates.createNow())} ==  ${leave.year})? 'true':'false'"> <label
 									th:text="${leave.year}"
 									class="btn btn-outline-primary border border-secondary shadow rounded"
 									th:for="'btnradio' + ${leave.year}">Year</label>
